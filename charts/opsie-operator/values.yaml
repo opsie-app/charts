@@ -1,0 +1,124 @@
+# Default values for Opsie Operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+app:
+  image:
+    repository: quay.io/opsie/operator
+    pullPolicy: IfNotPresent
+    tag: "0.6.0"
+
+  command:
+    - /app/opsie-status-operator
+    - watch:resource
+    - --http-url="https://google.com"
+    - --interval=60
+    - --timeout=5
+
+  # Add extra env to the operator container.
+  extraEnv: []
+  # - name: POD_ID
+  #   valueFrom:
+  #     fieldRef:
+  #       fieldPath: metadata.name
+  # - name: NODE_ID
+  #   valueFrom:
+  #     fieldRef:
+  #       fieldPath: spec.nodeName
+
+  # Extra volumes to mount on the container.
+  extraVolumeMounts: []
+  # - name: some-folder
+  #   mountPath: /some/path
+
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+  # Set the behavior for the autoscaler.
+  # https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 1800
+    scaleUp:
+      stabilizationWindowSeconds: 10
+
+  # Custom Metrics will be appended to the default CPU/Memory resources (if they're enabled).
+  customMetrics: []
+  # - type: Pods
+  #   pods:
+  #     metric:
+  #       name: nginx_process_utilization
+  #     target:
+  #       type: AverageValue
+  #       averageValue: "50"
+
+pdb:
+  enabled: false
+  minAvailable: 1
+  # maxUnavailable: 25%
+
+# In some cases, closing a Pod that has a lot of connections
+# will disconnect them, and stats would need some time to catch up with the disconnections,
+# so a bigger termination grace period would be suitable.
+terminationGracePeriodSeconds: 30
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Extra volumes to attach to the deployment.
+extraVolumes: []
+# - name: some-folder
+#   emptyDir: {}
+
+# Extra containers to run in the deployment.
+extraContainers: []
+
+# Extra init containers to run in the deployment.
+extraInitContainers: []
