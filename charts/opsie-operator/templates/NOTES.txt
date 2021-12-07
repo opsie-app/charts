@@ -1,1 +1,5 @@
 Opsie Operator now runs. :)
+
+The command that runs is:
+
+{{ .Values.app.command }}

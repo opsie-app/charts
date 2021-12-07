@@ -59,34 +59,10 @@ spec:
           command:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.app.extraEnv }}
           env:
-            - name: PORT
-              value: "6001"
-            {{- with .Values.app.extraEnv }}
             {{- toYaml . | nindent 12 }}
-            {{- end }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 6001
-              httpHeaders:
-              - name: X-Kube-Healthcheck
-                value: "Yes"
-            initialDelaySeconds: 5
-            periodSeconds: 1
-            failureThreshold: 1
-            successThreshold: 1
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 6001
-              httpHeaders:
-              - name: X-Kube-Healthcheck
-                value: "Yes"
-            initialDelaySeconds: 5
-            periodSeconds: 1
-            failureThreshold: 1
-            successThreshold: 1
+          {{- end }}
           resources:
             {{- toYaml .Values.app.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
