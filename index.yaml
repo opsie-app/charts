@@ -1,0 +1,24 @@
+apiVersion: v1
+entries:
+  operator:
+  - apiVersion: v2
+    appVersion: 0.18.0
+    created: "2021-12-07T11:29:57.24547491Z"
+    description: Run opsie/operator in your Kubernetes cluster using this Helm chart.
+    digest: d9fdc7f7720bc1f34965c04ee73835afbe33f400a0b2c44648e85707c9130bf0
+    name: operator
+    type: application
+    urls:
+    - https://github.com/opsie-app/charts/releases/download/operator-0.4.0/operator-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 0.6.0
+    created: "2021-12-07T11:32:55.893333373Z"
+    description: Run opsie/operator in your Kubernetes cluster using this Helm chart.
+    digest: 94e0e52bdb1c3a424f899ecd9c0cdc5d3e1461ab47b3060ea6fe17b38c2f25d7
+    name: operator
+    type: application
+    urls:
+    - https://github.com/opsie-app/charts/releases/download/operator-0.1.0/operator-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-12-07T11:32:55.893344573Z"
